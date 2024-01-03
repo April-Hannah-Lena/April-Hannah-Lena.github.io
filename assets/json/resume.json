@@ -48,18 +48,15 @@
   "skills": [
     {
       "name": "Scientific Computing",
-      "keywords": [
-        "Python, Julia, MATLAB"
-      ]
+      "keywords": ["Python", "Julia", "MATLAB"]
     },
     {
-      "name": "Theoretical course knowledge & practical work experience in Machine Learning"
+      "name": "Machine Learning",
+      "keywords": ["Theoretical course knowledge & practical work experience"]
     },
     {
       "name": "Optimization Methods",
-      "keywords": [
-        "nonlinear problems, linear integer problems, mixed integer problems"
-      ]
+      "keywords": ["nonlinear problems", "linear integer problems", "mixed integer problems"]
     }
   ],
   "languages": [
@@ -76,27 +73,34 @@
   ],
   "interests": [
     {
-      "name": "Applied Mathematics and Mathematical Physics",
-      "keywords": [
-        "Dynamical Systems, Operator Theory, Numerical Analysis"
-      ]
+      "name": "Dynamical Systems",
+      "keywords": ["Ergodic theory", "Koopmanism"]
+    },
+    {
+      "name": "Numerical Analysis",
+      "keywords": ["Pseudospectral methods", "Galerkin methods"]
+    },
+    {
+      "name": "Functional Analysis",
+      "keywords": ["Spectral theory, in particular continuous spectrum & spectral measures"]
+    },
+    {
+      "name": "Probability Theory",
+      "keywords": ["Random dynamical systems"]
     }
   ],
   "references": [
     {
       "name": "Professor Oliver Junge (TUM)",
-      "date": "2024-01-02",
-      "email": "oj@tum.de",
-      "url": "http://gaioguy.userweb.mwn.de"
+      "reference": "2024-01-02"
     },
     {
       "name": "Professor Martin Rasmussen (Imperial College London)",
-      "date": "2023-12-02",
-      "url": "https://www.ma.ic.ac.uk/~mrasmuss/"
+      "reference": "2023-12-02"
     },
     {
       "name": "Alexander Bogensperger (German Research Institute for Energy Economics (FfE))",
-      "date": "2022-10-04"
+      "reference": "2022-10-04"
     }
   ],
   "projects": [
