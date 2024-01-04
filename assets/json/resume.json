@@ -52,7 +52,11 @@
     },
     {
       "name": "Machine Learning",
-      "keywords": ["Theoretical course knowledge & practical work experience"]
+      "keywords": [
+        "Theoretical course knowledge & practical work experience", 
+        "Classical methods",
+        "Modern advancements e.g. Neural differential equations, PINNs"
+      ]
     },
     {
       "name": "Optimization Methods",
