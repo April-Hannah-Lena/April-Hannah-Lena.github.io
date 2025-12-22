@@ -6,7 +6,7 @@ title: blank # the website title (if blank, full name will be used instead)
 first_name: April
 middle_name: H.
 last_name: Herwig
-email: 
+email: ahlh2@cam.ac.uk
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
   Research Interests, projects, and publications. 
 footer_text: >
@@ -103,7 +103,7 @@ zotero_username: # your zotero username
 wechat_qr: # filename of your wechat qr-code saved as an image (e.g., wechat-qr.png if saved to assets/img/wechat-qr.png)
 
 contact_note: >
-  The best way to contact me is through GitHub :)
+
 
 # -----------------------------------------------------------------------------
 # Analytics and search engine verification

@@ -6,10 +6,10 @@
     "url": "https://April-Hannah-Lena.github.io/",
     "summary": "Student of applied mathematics",
     "location": {
-      "address": "TUM Teilgebäude Mathematik",
-      "postalCode": "82319",
-      "city": "Garching b. München",
-      "countryCode": "DE"
+      "address": "Centre for Mathematical Sciences",
+      "postalCode": "CB3 0WA",
+      "city": "Cambridge",
+      "countryCode": "UK"
     },
     "profiles": [
       {
@@ -24,6 +24,7 @@
       "name": "Technical University Munich (TUM)",
       "position": "Research Assistant",
       "startDate": "2021-10-01",
+      "endDate": "2025-10-01",
       "summary": "Numerical methods for dynamical systems"
     }
   ],
@@ -97,6 +98,10 @@
     {
       "name": "Professor Oliver Junge (TUM)",
       "reference": "2024-01-02"
+    },
+    {
+      "name": "Professor Matthew Colbrook",
+      "reference": "2025-10-10"
     },
     {
       "name": "Professor Martin Rasmussen (Imperial College London)",

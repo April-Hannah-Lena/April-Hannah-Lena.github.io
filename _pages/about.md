@@ -20,4 +20,4 @@ selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
 
-My name is April Herwig. I am a student of applied mathematics at the Technical University Munich (TUM). 
+My name is April Herwig. I am a PhD student in applied mathematics at the University of Cambridge. 
