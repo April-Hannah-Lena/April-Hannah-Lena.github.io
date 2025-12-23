@@ -8,11 +8,7 @@ profile:
   align: right
   image: prof_pic.jpg
   image_circular: false # crops the image to make it circular
-  more_info: >
-    <p>TUM School of Computation, Information and Technology</p>
-    <p>Office 5608.02.057</p>
-    <p>Boltzmannstr. 3</p>
-    <p>85748 Garching b. München</p>
+  more_info: 
 
 news: false  # includes a list of news items
 latest_posts: false  # includes a list of the newest posts

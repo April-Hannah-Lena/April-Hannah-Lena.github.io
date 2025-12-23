@@ -19,15 +19,6 @@
       }
     ]
   },
-  "work": [
-    {
-      "name": "Technical University Munich (TUM)",
-      "position": "Research Assistant",
-      "startDate": "2021-10-01",
-      "endDate": "2025-10-01",
-      "summary": "Numerical methods for dynamical systems"
-    }
-  ],
   "education": [
     {
       "institution": "Technical University Munich (TUM)",
@@ -100,7 +91,7 @@
       "reference": "2024-01-02"
     },
     {
-      "name": "Professor Matthew Colbrook",
+      "name": "Professor Matthew Colbrook (Cambridge)",
       "reference": "2025-10-10"
     },
     {
