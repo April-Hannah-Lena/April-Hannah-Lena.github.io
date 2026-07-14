@@ -1,603 +1,251 @@
-\documentclass[10pt, a4paper]{article}
+\documentclass[10pt,a4paper]{article}
 
-% Packages:
-\usepackage[
-    ignoreheadfoot, % set margins without considering header and footer
-    top=2 cm, % seperation between body and page edge from the top
-    bottom=2 cm, % seperation between body and page edge from the bottom
-    left=2 cm, % seperation between body and page edge from the left
-    right=2 cm, % seperation between body and page edge from the right
-    footskip=1.0 cm, % seperation between body and footer
-    % showframe % for debugging 
-]{geometry} % for adjusting page geometry
-\usepackage{titlesec} % for customizing section titles
-\usepackage{tabularx} % for making tables with fixed width columns
-\usepackage{array} % tabularx requires this
-\usepackage[dvipsnames]{xcolor} % for coloring text
-\definecolor{primaryColor}{RGB}{0, 79, 144} % define primary color
-\usepackage{enumitem} % for customizing lists
-\usepackage{fontawesome5} % for using icons
-\usepackage{amsmath} % for math
+\usepackage[margin=2cm,footskip=1cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\definecolor{primaryColor}{RGB}{0,79,144}
 \usepackage[
     pdftitle={April Herwig},
     pdfauthor={April Herwig},
     colorlinks=true,
     urlcolor=primaryColor
-]{hyperref} % for links, metadata and bookmarks
-\usepackage[pscoord]{eso-pic} % for floating text on the page
-\usepackage{calc} % for calculating lengths
-\usepackage{bookmark} % for bookmarks
-\usepackage{lastpage} % for getting the total number of pages
-\usepackage{changepage} % for one column entries (adjustwidth environment)
-\usepackage{paracol} % for two and three column entries
-\usepackage{ifthen} % for conditional statements
-\usepackage{needspace} % for avoiding page brake right after the section title
-\usepackage{iftex} % check if engine is pdflatex, xetex or luatex
+]{hyperref}
 
-% Ensure that generate pdf is machine readable/ATS parsable:
-\ifPDFTeX
-    \input{glyphtounicode}
-    \pdfgentounicode=1
-    % \usepackage[T1]{fontenc} % this breaks sb2nov
-    \usepackage[utf8]{inputenc}
-    \usepackage{lmodern}
-\fi
+\input{glyphtounicode}
+\pdfgentounicode=1
 
+\pagestyle{plain}
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
 
+\titleformat{\section}{\large\bfseries}{}{0pt}{}[\vspace{1pt}\titlerule]
+\titlespacing*{\section}{0pt}{0.3cm}{0.2cm}
 
-% Some settings:
-\AtBeginEnvironment{adjustwidth}{\partopsep0pt} % remove space before adjustwidth environment
-\pagestyle{empty} % no header or footer
-\setcounter{secnumdepth}{0} % no section numbering
-\setlength{\parindent}{0pt} % no indentation
-\setlength{\topskip}{0pt} % no top skip
-\setlength{\columnsep}{0cm} % set column seperation
-\makeatletter
-\let\ps@customFooterStyle\ps@plain % Copy the plain style to customFooterStyle
-\patchcmd{\ps@customFooterStyle}{\thepage}{
-    \color{gray}\textit{\small \thepage{}}
-}{}{} % replace number by desired string
-\makeatother
-\pagestyle{customFooterStyle}
+\setlist[itemize]{
+    label=$\circ$,
+    leftmargin=0.55cm,
+    topsep=0.1cm,
+    itemsep=0pt,
+    parsep=0.05cm,
+    partopsep=0pt
+}
 
-\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+\newcommand{\datedentry}[2]{%
+    \begin{tabularx}{\textwidth}{@{}X>{\raggedleft\arraybackslash}p{4cm}@{}}
+        #1 & \textit{#2}
+    \end{tabularx}%
+}
 
-\titlespacing{\section}{
-    % left space:
-    -1pt
-}{
-    % top space:
-    0.3 cm
-}{
-    % bottom space:
-    0.2 cm
-} % section title spacing
-
-\renewcommand\labelitemi{$\circ$} % custom bullet points
-\newenvironment{highlights}{
-    \begin{itemize}[
-        topsep=0.10 cm,
-        parsep=0.10 cm,
-        partopsep=0pt,
-        itemsep=0pt,
-        leftmargin=0.4 cm + 10pt
-    ]
-}{
-    \end{itemize}
-} % new environment for highlights
-
-\newenvironment{highlightsforbulletentries}{
-    \begin{itemize}[
-        topsep=0.10 cm,
-        parsep=0.10 cm,
-        partopsep=0pt,
-        itemsep=0pt,
-        leftmargin=10pt
-    ]
-}{
-    \end{itemize}
-} % new environment for highlights for bullet entries
-
-
-\newenvironment{onecolentry}{
-    \begin{adjustwidth}{
-        0.2 cm + 0.00001 cm
-    }{
-        0.2 cm + 0.00001 cm
-    }
-}{
-    \end{adjustwidth}
-} % new environment for one column entries
-
-\newenvironment{twocolentry}[2][]{
-    \onecolentry
-    \def\secondColumn{#2}
-    \setcolumnwidth{\fill, 9 cm}
-    \begin{paracol}{2}
-}{
-    \switchcolumn \raggedleft \secondColumn
-    \end{paracol}
-    \endonecolentry
-} % new environment for two column entries
-
-\newenvironment{header}{
-    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.5}
-}{
-    \par\kern\topsep
-} % new environment for the header
-
-\newcommand{\placelastupdatedtext}{% \placetextbox{<horizontal pos>}{<vertical pos>}{<stuff>}
-  \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
-    \put(
-        \LenToUnit{\paperwidth-2 cm-0.2 cm+0.05cm},
-        \LenToUnit{\paperheight-1.0 cm}
-    ){\vtop{{\null}\makebox[0pt][c]{
-        \small\color{gray}\textit{Last updated December 2024}\hspace{\widthof{Last updated December 2024}}
-    }}}%
-  }%
-}%
-
-% save the original href command in a new command:
-\let\hrefWithoutArrow\href
-
-% new command for external links:
-\renewcommand{\href}[2]{\hrefWithoutArrow{#1}{\ifthenelse{\equal{#2}{}}{ }{#2 }\raisebox{.15ex}{\footnotesize \faExternalLink*}}}
-
+\newcommand{\referenceentry}[2]{%
+    \begin{tabularx}{\textwidth}{@{}X>{\raggedleft\arraybackslash}p{9cm}@{}}
+        #1 & \textit{#2}
+    \end{tabularx}%
+}
 
 \begin{document}
-    \newcommand{\AND}{\unskip
-        \cleaders\copy\ANDbox\hskip\wd\ANDbox
-        \ignorespaces
-    }
-    \newsavebox\ANDbox
-    \sbox\ANDbox{}
 
-    \placelastupdatedtext
-    \begin{header}
-        \textbf{\fontsize{24 pt}{24 pt}\selectfont April Herwig}
+%
+% --------------------------------------------------------------------------
+% UPDATE ME WHENEVER YOU TOUCH THIS !!!
+% --------------------------------------------------------------------------
+%
+\begin{flushright}
+    \small\color{gray}\textit{Last updated July 2026}
+\end{flushright}
 
-        \vspace{0.3 cm}
+\vspace{-1.2em}
+\begin{center}
+    {\fontsize{24pt}{26pt}\selectfont\bfseries April Herwig}\\[0.3cm]
+    \href{mailto:ahlh2@cam.ac.uk}{ahlh2@cam.ac.uk}
+    \quad | \quad
+    \href{https://april-hannah-lena.github.io/}{april-hannah-lena.github.io}
+    \quad | \quad
+    \href{https://github.com/April-Hannah-Lena}{April-Hannah-Lena}
+\end{center}
 
-        %\normalsize
-        %\mbox{{\color{black}\footnotesize\faMapMarker*}\hspace*{0.13cm}Your Location}%
-        %\kern 0.25 cm%
-        %\AND%
-        \kern 0.25 cm%
-        \mbox{\hrefWithoutArrow{mailto:april.herwig@tum.de}{\color{black}{\footnotesize\faEnvelope[regular]}\hspace*{0.13cm}april.herwig@tum.de}}%
-        \kern 0.25 cm%
-        \AND%
-        %\kern 0.25 cm%
-        %\mbox{\hrefWithoutArrow{tel:+90-541-999-99-99}{\color{black}{\footnotesize\faPhone*}\hspace*{0.13cm}0541 999 99 99}}%
-        %\kern 0.25 cm%
-        %\AND%
-        \kern 0.25 cm%
-        \mbox{\hrefWithoutArrow{https://april-hannah-lena.github.io/}{\color{black}{\footnotesize\faLink}\hspace*{0.13cm}april-hannah-lena.github.io}}%
-        \kern 0.25 cm%
-        \AND%
-        %\kern 0.25 cm%
-        %\mbox{\hrefWithoutArrow{https://linkedin.com/in/yourusername}{\color{black}{\footnotesize\faLinkedinIn}\hspace*{0.13cm}yourusername}}%
-        %\kern 0.25 cm%
-        %\AND%
-        \kern 0.25 cm%
-        \mbox{\hrefWithoutArrow{https://github.com/April-Hannah-Lena}{\color{black}{\footnotesize\faGithub}\hspace*{0.13cm}April-Hannah-Lena}}%
-    \end{header}
+\section{Education}
 
-    \vspace{0.3 cm - 0.3 cm}
+\textbf{Technical University Munich (TUM)}
+
+\datedentry{\textit{PhD. Applied Mathematics}}{Oct 2025 -- current}
+\begin{itemize}
+    \item \textbf{Coursework:} Foundations of Computation in Dynamical Systems
+\end{itemize}
+
+\datedentry{\textit{M.Sc. Mathematics}}{Oct 2022 -- Apr 2025}
+\begin{itemize}
+    \item High distinction
+    \item \textbf{Coursework:} Resolvent-based methods for robust spectral analysis of Koopman operators
+\end{itemize}
+
+\medskip
+\datedentry{\textit{B.Sc. Mathematics}}{Oct 2018 -- Sep 2022}
+\begin{itemize}
+    \item \textbf{Coursework:} Global Analysis of Invariant Objects in dynamical systems
+\end{itemize}
+
+\section{Talks}
+
+\datedentry{\textbf{International Symposium on Mathematical Theory of Networks and Systems, Toronto}}{Aug 2026}
+\begin{itemize}
+    \item Exploiting Nonlinearity in Transfer Operator Approaches to Achieve more Robust Data-Driven Predictors
+\end{itemize}
+
+\datedentry{\textbf{10th European Congress on Computational Methods in Applied Sciences and Engineering, Munich}}{Jul 2026}
+\begin{itemize}
+    \item Koopman and Transfer Operator Spectra from Data: No Pollution, No Invisibility
+\end{itemize}
+
+\datedentry{\textbf{SIAM Nonlinear Waves and Coherent Structures (NWCS26), Montreal}}{May 2026}
+\begin{itemize}
+    \item The Limits and Possibilities of Koopman Operator Learning
+\end{itemize}
+
+\datedentry{\textbf{Corpus Christi \& Clare College, Cambridge}}{Mar 2026}
+\begin{itemize}
+    \item Hidden Order: Coherence and Structure in Chaotic Systems
+\end{itemize}
+
+\datedentry{\textbf{SIAM Applications of Dynamical Systems (DS25), Denver, CO}}{Mar 2025}
+\begin{itemize}
+    \item On the Subtle Importance of Function Spaces in Koopman Eigenmode Decompositions
+\end{itemize}
+
+\datedentry{\textbf{The Hong Kong Polytechnic University}}{Aug 2024}
+\begin{itemize}
+    \item Mathematical cancer research; optimal control of PARP inhibitor administration in ovarian cancer
+\end{itemize}
+
+\smallskip
+\datedentry{\textbf{11th International Conference on the Julia Programming Language}}{Jul 2024}
+\begin{itemize}
+    \item Fast, elegant, set-oriented numerical analysis using Julia
+    (\href{https://youtu.be/iQrVzOOJo6Y?si=IyniAxC5gF5Np9SJ}{recording})
+\end{itemize}
+
+\smallskip
+\datedentry{\textbf{Universität Bayreuth}}{Mar 2024}
+\begin{itemize}
+    \item Pseudospectra and applications to validated computational dynamics
+    (\href{https://github.com/April-Hannah-Lena/talk_GAIO.jl/blob/main/pseudospectrum.pdf}{slides})
+\end{itemize}
+
+\smallskip
+\datedentry{\textbf{SIAM Conference on Dynamical Systems (DS23 - Oregon)}}{May 2023}
+\begin{itemize}
+    \item Set-oriented numerical analysis wth GAIO.jl
+\end{itemize}
+
+\smallskip
+\datedentry{\textbf{Research Seminar Computational Dynamics, Munich}}{Mar 2023}
+\begin{itemize}
+    \item On the Determinants of Trace-class Operators: Lidskii's Theorem and Applications
+\end{itemize}
+
+\smallskip
+\datedentry{\textbf{9th International Conference on Set-Oriented Numerics}}{Oct 2022}
+\begin{itemize}
+    \item GAIO - 25 years later
+\end{itemize}
 
 \iffalse
-    \section{Welcome to RenderCV!}
+\section{Projects}
 
+\textbf{Computational Dynamical Systems}
+\begin{itemize}
+    \item Kernel residual dynamic mode decompositions (paper in progress)
+    \item Stochastic and deterministic transfer operator approximation using entropically regularized optimal transport
+    \item Perturbation theory of transfer operators using stochastic blurring and Schrödinger bridges
+    \item Fast, elegant, set-oriented numerical analysis using Julia (paper in progress)
+\end{itemize}
 
+\medskip
+\textbf{Sustainable Energy Economics (In Industry)}
+\begin{itemize}
+    \item Machine learning on multi-scale data for decentralized local energy production
+\end{itemize}
 
-        
-        \begin{onecolentry}
-            \href{https://rendercv.com}{RenderCV} is a LaTeX-based CV/resume version-control and maintenance app. It allows you to create a high-quality CV or resume as a PDF file from a YAML file, with \textbf{Markdown syntax support} and \textbf{complete control over the LaTeX code}.
-        \end{onecolentry}
+\medskip
+\textbf{Optimal Transport}
+\begin{itemize}
+    \item Structure preserving kernel Koopman mode decompositions using Fenchel-Rockafeller duality
+\end{itemize}
 
-        \vspace{0.2 cm}
+\medskip
+\textbf{Plasma Fusion Energy}
+\begin{itemize}
+    \item Preservation fusion-relevant observables in low-rank tensor-approximations of Vlasov-Poisson equations
+\end{itemize}
 
-        \begin{onecolentry}
-            The boilerplate content was inspired by \href{https://github.com/dnl-blkv/mcdowell-cv}{Gayle McDowell}.
-        \end{onecolentry}
+\medskip
+\textbf{Cancer Cell Dynamics}
+\begin{itemize}
+    \item Data-driven and hidden-Markov models for cancer treatment
+\end{itemize}
 
+\newpage
+\section{Skills and Interests}
 
-    
-    \section{Quick Guide}
+\textbf{Dynamical Systems}
+\begin{itemize}
+    \item Ergodic theory and transfer operators
+\end{itemize}
 
-    \begin{onecolentry}
-        \begin{highlightsforbulletentries}
+\smallskip
+\textbf{Machine Learning}
+\begin{itemize}
+    \item Theoretical course knowledge and practical experience in industry
+    \item Classical methods and modern advancements e.g. neural differential equations, PINNs
+\end{itemize}
 
+\smallskip
+\textbf{Functional Analysis}
+\begin{itemize}
+    \item Spectral theory, in particular continuous spectrum and spectral measures
+\end{itemize}
 
-        \item Each section title is arbitrary and each section contains a list of entries.
+\smallskip
+\textbf{Numerical Analysis}
+\begin{itemize}
+    \item Spectral methods, Galerkin methods, compactification
+\end{itemize}
 
-        \item There are 7 unique entry types: \textit{BulletEntry}, \textit{TextEntry}, \textit{EducationEntry}, \textit{ExperienceEntry}, \textit{NormalEntry}, \textit{PublicationEntry}, and \textit{OneLineEntry}.
+\smallskip
+\textbf{Optimization Methods}
+\begin{itemize}
+    \item Nonlinear programs, integer linear programs, mixed integer programs
+\end{itemize}
 
-        \item Select a section title, pick an entry type, and start writing your section!
-
-        \item \href{https://docs.rendercv.com/user_guide/}{Here}, you can find a comprehensive user guide for RenderCV.
-
-
-        \end{highlightsforbulletentries}
-    \end{onecolentry}
+\smallskip
+\textbf{Scientific Computing}
+\begin{itemize}
+    \item Julia, Numpy, Matlab
+\end{itemize}
 \fi
 
-    \section{Education}
-
-
-        \vspace{0.1cm}
-
-        \textbf{Technical University Munich (TUM)}    
-        
-        \begin{twocolentry}{
-
-        \textit{Oct 2022 – Apr 2025}}   
-            \textit{M.Sc. Mathematics}
-        \end{twocolentry}
-
-        \vspace{0.10 cm}
-        \begin{onecolentry}
-            \begin{highlights}
-                \item Expected high distinction 
-                \item (Expected) GPA 1.1 / 6 (German, 1 is best)
-                \item \textbf{Coursework:} Resolvent-based methods for robust spectral analysis of Koopman operators
-            \end{highlights}
-        \end{onecolentry}
-
-        \vspace{0.3cm}
-
-        \begin{twocolentry}{
-
-        \textit{Oct 2018 – Sep 2022}}   
-            \textit{B.Sc. Mathematics}
-        \end{twocolentry}
-
-        \vspace{0.10 cm}
-        \begin{onecolentry}
-            \begin{highlights}
-                \item GPA 2.1 / 6
-                \item \textbf{Coursework:} Global Analysis of Invariant Objects in dynamical systems
-            \end{highlights}
-        \end{onecolentry}
-
-
-    
-    \section{International Experience}
-
-
-
-        \vspace{0.1cm}
-
-        
-        \begin{twocolentry}{
-            
-        \textit{Jul 2024 – Aug 2024}}
-            \textbf{The Hong Kong Polytechnic University}
-
-        \end{twocolentry}
-
-        \vspace{0.10 cm}
-        \begin{onecolentry}
-            \begin{highlights}
-                \item Mathematical cancer research; optimal control of PARP inhibitor administration in ovarian cancer
-            \end{highlights}
-        \end{onecolentry}
-
-
-        \vspace{0.2 cm}
-
-        \begin{twocolentry}{
-            
-        \textit{Jul 2024}}
-            \textbf{11th International Conference on the Julia Programming Language}
-
-        \end{twocolentry}
-
-        \vspace{0.10 cm}
-        \begin{onecolentry}
-            \begin{highlights}
-                \item Fast, elegant, set-oriented numerical analysis using Julia (\href{https://youtu.be/iQrVzOOJo6Y?si=IyniAxC5gF5Np9SJ}{recording})
-            \end{highlights}
-        \end{onecolentry}
-
-
-        \vspace{0.2 cm}
-
-        \begin{twocolentry}{
-            
-        \textit{Mar 2024}}
-            \textbf{Universität Bayreuth}
-
-        \end{twocolentry}
-
-        \vspace{0.10 cm}
-        \begin{onecolentry}
-            \begin{highlights}
-                \item Pseudospectra and applications to validated computations dynamics (\href{https://github.com/April-Hannah-Lena/talk_GAIO.jl/blob/main/pseudospectrum.pdf}{slides})
-            \end{highlights}
-        \end{onecolentry}
-
-
-        \vspace{0.2 cm}
-
-        \begin{twocolentry}{
-            
-        \textit{May 2023}}
-            \textbf{SIAM Conference on Dynamical Systems (DS23 - Oregon)}
-
-        \end{twocolentry}
-
-        \vspace{0.10 cm}
-        \begin{onecolentry}
-            \begin{highlights}
-                \item Set-oriented numerical analysis wth GAIO.jl
-            \end{highlights}
-        \end{onecolentry}
-
-
-        \vspace{0.2 cm}
-
-        \begin{twocolentry}{
-            
-        \textit{Oct 2022}}
-            \textbf{9th International Conference on Set-Oriented Numerics}
-
-        \end{twocolentry}
-
-        \vspace{0.10 cm}
-        \begin{onecolentry}
-            \begin{highlights}
-                \item GAIO - 25 years later
-            \end{highlights}
-        \end{onecolentry}
-
-
-    \iffalse
-    \section{Publications}
-
-
-
-        
-        \begin{samepage}
-            \begin{twocolentry}{
-                Jan 2004
-            }
-                \textbf{3D Finite Element Analysis of No-Insulation Coils}
-
-                \vspace{0.10 cm}
-
-                \mbox{Frodo Baggins}, \mbox{\textbf{\textit{John Doe}}}, \mbox{Samwise Gamgee}
-            \end{twocolentry}
-
-
-            \vspace{0.10 cm}
-
-            \begin{onecolentry}
-        \href{https://doi.org/10.1109/TASC.2023.3340648}{10.1109/TASC.2023.3340648}
-            \end{onecolentry}
-        \end{samepage}
-    \fi
-
-    
-    \section{Projects}
-
-
-        \vspace{0.1cm}
-
-
-        \textbf{Computational Dynamical Systems}
-
-        \vspace{0.1cm}
-
-        \begin{onecolentry}
-            \begin{highlights}
-                \item Kernel residual dynamic mode decompositions (paper in progress)
-                \item Stochastic and deterministic transfer operator approximation using entropically regularized optimal transport
-                \item Perturbation theory of transfer operators using stochastic blurring and Schrödinger bridges
-                \item Fast, elegant, set-oriented numerical analysis using Julia (paper in progress)
-            \end{highlights}
-        \end{onecolentry}
-
-        \vspace{0.3cm}
-
-
-        \textbf{Sustainable Energy Economics (In Industry)}
-
-        \vspace{0.1cm}
-
-        \begin{onecolentry}
-            \begin{highlights}
-                \item Machine learning on multi-scale data for decentralized local energy production
-            \end{highlights}
-        \end{onecolentry}
-
-        \vspace{0.3cm}
-
-
-        \textbf{Optimal Transport}
-
-        \vspace{0.1cm}
-
-        \begin{onecolentry}
-            \begin{highlights}
-                \item Structure preserving kernel Koopman mode decompositions using Fenchel-Rockafeller duality
-            \end{highlights}
-        \end{onecolentry}
-
-        \vspace{0.3cm}
-
-
-        \textbf{Plasma Fusion Energy}
-
-        \vspace{0.1cm}
-
-        \begin{onecolentry}
-            \begin{highlights}
-                \item Preservation fusion-relevant observables in low-rank tensor-approximations of Vlasov-Poisson equations
-            \end{highlights}
-        \end{onecolentry}
-
-        \vspace{0.3cm}
-
-        
-        \textbf{Cancer Cell Dynamics}
-
-        \vspace{0.1cm}
-
-        \begin{onecolentry}
-            \begin{highlights}
-                \item Data-driven and hidden-Markov models for cancer treatment
-            \end{highlights}
-        \end{onecolentry}
-
-        \vspace{0.3cm}
-
-
-
-
-
-    \section{Skills and Interests}
-
-
-        \vspace{0.1cm}
-
-
-        \textbf{Dynamical Systems}
-
-        \vspace{0.1cm}
-
-        \begin{onecolentry}
-            \begin{highlights}
-                \item Ergodic theory and transfer operators
-            \end{highlights}
-        \end{onecolentry}
-
-        \vspace{0.2cm}
-
-
-        \textbf{Machine Learning}
-
-        \vspace{0.1cm}
-
-        \begin{onecolentry}
-            \begin{highlights}
-                \item Theoretical course knowledge and practical experience in industry
-                \item Classical methods and modern advancements e.g. neural differential equations, PINNs
-            \end{highlights}
-        \end{onecolentry}
-
-        \vspace{0.2cm}
-
-
-        \textbf{Functional Analysis}
-
-        \vspace{0.1cm}
-
-        \begin{onecolentry}
-            \begin{highlights}
-                \item Spectral theory, in particular continuous spectrum and spectral measures
-            \end{highlights}
-        \end{onecolentry}
-
-        \vspace{0.2cm}
-
-
-        \textbf{Numerical Analysis}
-
-        \vspace{0.1cm}
-
-        \begin{onecolentry}
-            \begin{highlights}
-                \item Spectral methods, Galerkin methods, compactification
-            \end{highlights}
-        \end{onecolentry}
-
-        \vspace{0.2cm}
-
-
-        \textbf{Optimization Methods}
-
-        \vspace{0.1cm}
-
-        \begin{onecolentry}
-            \begin{highlights}
-                \item Nonlinear programs, integer linear programs, mixed integer programs
-            \end{highlights}
-        \end{onecolentry}
-
-        \vspace{0.2cm}
-
-
-        \textbf{Scientific Computing}
-
-        \vspace{0.1cm}
-
-        \begin{onecolentry}
-            \begin{highlights}
-                \item Julia, Numpy, Matlab
-            \end{highlights}
-        \end{onecolentry}
-
-        \vspace{0.2cm}
-
-
-
-
-    \section{References}
-
-
-        \vspace{0.1cm}
-
-
-        \begin{twocolentry}{
-            \textit{TUM}
-        }
-            Prof. Oliver Junge
-        \end{twocolentry}
-
-        \vspace{0.2cm}
-
-        \begin{twocolentry}{
-            \textit{Imperial College London}
-        }
-            Prof. Martin Rasmussen
-        \end{twocolentry}
-
-        \vspace{0.2cm}
-
-        \begin{twocolentry}{
-            \textit{German Research Institute for Energy Economics (FfE)}
-        }
-            Alexander Bogensperger
-        \end{twocolentry}
-
-        \vspace{0.2cm}
-
-        \begin{twocolentry}{
-            \textit{TUM}
-        }
-            Prof. Caroline Lasser
-        \end{twocolentry}
-
-        \vspace{0.2cm}
-
-        \begin{twocolentry}{
-            \textit{TUM}
-        }
-            Prof. Gero Friesecke
-        \end{twocolentry}
-
-        \vspace{0.2cm}
-
-
-
-    \section{Languages}
-
-        \vspace{0.1cm}
-
-        German, English (native)
-
-
-
-    
+\section{References}
+
+\referenceentry{Prof. Matthew Colbrook}{Cambridge}
+\smallskip
+\referenceentry{Prof. Oliver Junge}{TUM}
+\smallskip
+\referenceentry{Prof. Martin Rasmussen}{Imperial College London}
+\smallskip
+\referenceentry{Alexander Bogensperger}{German Research Institute for Energy Economics (FfE)}
+\smallskip
+\referenceentry{Prof. Caroline Lasser}{TUM}
+\smallskip
+\referenceentry{Prof. Gero Friesecke}{TUM}
+
+\iffalse
+\section{Languages}
+
+German, English (native)
+\fi
 
 \end{document}
